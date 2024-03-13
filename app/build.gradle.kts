@@ -48,6 +48,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     // ViewModel utilities for Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
     implementation ("com.squareup.retrofit2:retrofit:2.1.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.1.0")
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")

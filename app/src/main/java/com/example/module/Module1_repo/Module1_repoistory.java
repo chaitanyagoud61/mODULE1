@@ -3,6 +3,7 @@ package com.example.module.Module1_repo;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.example.module.MainActivity;
 import com.example.module.Module1_database.Module_database;
 import com.example.module.Network_controller.Posts;
 import com.example.module.Network_controller.Retrofit_data;
@@ -21,16 +22,16 @@ import retrofit2.Response;
 public class Module1_repoistory {
 
 
-    private ExecutorService background_service = Executors.newSingleThreadExecutor();
-    private Handler handler;
     public Module_database moduleDatabase;
     public Retrofit_service retrofitService;
     public List<Posts> list= new ArrayList<>();
 
-    public Module1_repoistory(Context context){
+    public Module1_repoistory(Context context) {
+        if (moduleDatabase == null){
+            moduleDatabase = new Module_database(context);
+            moduleDatabase.Open();
+        }
 
-        /*moduleDatabase = new Module_database(context);
-        moduleDatabase.Open();*/
     }
 
 
@@ -63,20 +64,13 @@ public class Module1_repoistory {
 
         List<String> name = new ArrayList<>();
         try{
+            Cursor cursor=null;
 
-            background_service.execute(new Runnable() {
-                @Override
-                public void run() {
+            cursor = moduleDatabase.getusers();
+            while(cursor!=null && cursor.moveToNext()){
 
-                    Cursor cursor=null;
-
-                    cursor = moduleDatabase.getusers();
-                    while(cursor!=null && cursor.moveToNext()){
-
-                        name.add(cursor.getString(cursor.getColumnIndexOrThrow("user_name")));
-                    }
-                }
-            });
+                name.add(cursor.getString(cursor.getColumnIndexOrThrow("user_name")));
+            }
 
         }catch (Exception e){
             e.printStackTrace();

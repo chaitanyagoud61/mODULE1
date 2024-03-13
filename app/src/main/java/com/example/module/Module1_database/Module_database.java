@@ -9,33 +9,21 @@ import android.util.Log;
 
 public class Module_database {
 
-    public SQLiteDatabase db;
-    public Sqlitedb database;
-    public Context context;
-    public Module_database moduleDatabase;
+    private SQLiteDatabase db;
+    private Sqlitedb database;
+    private Context context;
+    public static final String users="CREATE TABLE IF NOT EXISTS user(id integer primary key autoincrement,user_name" +
+            " text);";
 
+    public static final String USER_TABLE = "user";
     private static  final String NAME = "MODULE_DB";
     private static final int VERSION = 1;
 
 
-    public Module_database(Context context) {
-        this.context = context;
-    }
-
-    public Module_database Open() throws SQLException {
-
-        moduleDatabase = new Module_database(context);
-        db = database.getWritableDatabase();
-
-        return this;
-    }
 
     public class Sqlitedb extends SQLiteOpenHelper {
 
-        public String users="CREATE TABLE IF NOT EXISTS user(id INTEGER PRIMARY KEY AUTOINCREMENT,user_name" +
-                " text)";
 
-        public String USER_TABLE = "user";
         public Sqlitedb(Context context) {
             super(context,NAME ,null ,VERSION );
         }
@@ -45,12 +33,12 @@ public class Module_database {
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-            db.execSQL(users,null);
+            sqLiteDatabase.execSQL(users);
             Log.v("TABLE CREATED",USER_TABLE);
 
-            db.execSQL("INSERT INTO user(user_name) VALUES ('chaitanya')");
-            db.execSQL("INSERT INTO user(user_name) VALUES ('chaitanya2')");
-            db.execSQL("INSERT INTO user(user_name) VALUES ('chaitanya3')");
+            sqLiteDatabase.execSQL("INSERT INTO user(user_name) VALUES ('chaitanya')");
+            sqLiteDatabase.execSQL("INSERT INTO user(user_name) VALUES ('chaitanya2')");
+            sqLiteDatabase.execSQL("INSERT INTO user(user_name) VALUES ('chaitanya3')");
         }
 
         @Override
@@ -61,6 +49,17 @@ public class Module_database {
 
 
 
+    }
+
+    public Module_database(Context context) {
+        this.context = context;
+    }
+    public Module_database Open() throws SQLException {
+
+        database = new Sqlitedb(context);
+        db = database.getWritableDatabase();
+
+        return this;
     }
 
     public Cursor getusers(){

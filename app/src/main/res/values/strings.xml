@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">module1</string>
+    <string name="app_name">module</string>
     <string name="Base_url">https://jsonplaceholder.typicode.com/</string>
 </resources>
